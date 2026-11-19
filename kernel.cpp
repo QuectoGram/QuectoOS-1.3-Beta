@@ -41,11 +41,11 @@ extern "C" __attribute__((section(".text.kernel_main"))) void kernel_main(void) 
         video_memory[row1_offset + (j * 2)]     = static_cast<uint8_t>(str1[j]);
         video_memory[row1_offset + (j * 2) + 1] = 0x1F;
     }
-    const char str1[] = "Version: 1.3";
+    const char str3[] = "Version: 1.3";
     const size_t row3_offset = 80 * 2 * 2 * 2;
-    for (size_t j = 0; str1[j] != '\0'; m++) {
-        video_memory[row3_offset + (j * 2)]     = static_cast<uint8_t>(str1[j]);
-        video_memory[row3_offset + (j * 2) + 1] = 0x1F;
+    for (size_t k = 0; str3[k] != '\0'; k++) {
+        video_memory[row3_offset + (k * 2)]     = static_cast<uint8_t>(str3[k]);
+        video_memory[row3_offset + (k * 2) + 1] = 0x1F;
     }
     outb(0x3D4, 0x0A); outb(0x3D5, 0x20);
     outb(0x64, 0xA8); while (inb(0x64) & 2); outb(0x64, 0xD4);
