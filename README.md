@@ -10,7 +10,7 @@ ______________________________
 it prints Welcome to QuectoOS 
 _____________________________
 # Updates
-Added Version
+Added Version of QuectoOS
 ___________________________
 # Downloads
 Download a Github Release
