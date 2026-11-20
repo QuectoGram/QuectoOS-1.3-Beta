@@ -1,6 +1,6 @@
 [BITS 16]
 [ORG 0x10000]
-
+; asm entry
 start:
     cli
     mov ax, 0x1000
