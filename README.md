@@ -1,4 +1,5 @@
 Welcome to QuectoOS 1.3 a 64 bit Operating System
+![](video/video1.gif)
 ________________________________
 # Made With
 c++ Assembly, python
