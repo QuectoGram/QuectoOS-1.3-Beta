@@ -51,11 +51,10 @@ extern "C" __attribute__((section(".text.kernel_main"))) void kernel_main(void) 
     outb(0x3D4, 0x0A); outb(0x3D5, 0x20);
     outb(0x64, 0xA8); while (inb(0x64) & 2); outb(0x64, 0xD4);
     while (inb(0x64) & 2); outb(0x60, 0xF4); while (!(inb(0x64) & 1)); (void)inb(0x60);
-
     int x = 320, y = 200, s = 0, p = 2000;
-    uint8_t b[3], c = ' ', a = 0x1F;
-    video_memory[p] = '|'; video_memory[p + 1] = 0x1E;
-
+    uint8_t b[3];
+    uint8_t c = video_memory[p], a = video_memory[p + 1];
+    video_memory[p] = 0x1E; video_memory[p + 1] = 0x1E;
     while (1) {
         if ((inb(0x64) & 0x21) == 0x21 && (b[s++] = inb(0x60), s == 3)) {
             s = 0; video_memory[p] = c; video_memory[p + 1] = a;
@@ -64,10 +63,6 @@ extern "C" __attribute__((section(".text.kernel_main"))) void kernel_main(void) 
             y = y < 0 ? 0 : (y > 399 ? 399 : y);
             p = ((y / 16) * 80 + (x / 8)) * 2;
             c = video_memory[p]; a = video_memory[p + 1];
-            video_memory[p] = '|'; video_memory[p + 1] = 0x1E;
-        }
+        }   video_memory[p] = 0x1E; video_memory[p + 1] = 0x1E;
     }
-
-
-    
 }
