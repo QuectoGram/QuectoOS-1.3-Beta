@@ -1,10 +1,10 @@
 // Quecto Code
 #include <stdint.h>
 #include <stddef.h>
+// Make I / O 
 static inline void outb(uint16_t port, uint8_t val) {
     __asm__ volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
 }
-
 static inline uint8_t inb(uint16_t port) {
     uint8_t ret;
     __asm__ volatile ("inb %1, %0" : "=a"(ret) : "Nd"(port));
@@ -20,11 +20,13 @@ extern "C" __attribute__((section(".text.kernel_main"))) void kernel_main(void) 
     outb(0x3C0, mode);
     (void)inb(0x3DA);
     outb(0x3C0, 0x20);
+    // Making Video Memory
     volatile uint8_t *video_memory = reinterpret_cast<volatile uint8_t *>(static_cast<uintptr_t>(0xB8000));
     for (size_t i = 0; i < 80 * 25; i++) {
         video_memory[i * 2]     = ' ';
         video_memory[i * 2 + 1] = 0x1F;
     }
+    // Making Text
     const char str[] = "Welcome to QuectoOS";
     for (size_t i = 0; str[i] != '\0'; i++) {
         video_memory[i * 2]     = static_cast<uint8_t>(str[i]);
@@ -48,6 +50,7 @@ extern "C" __attribute__((section(".text.kernel_main"))) void kernel_main(void) 
         video_memory[row3_offset + (k * 2)]     = static_cast<uint8_t>(str3[k]);
         video_memory[row3_offset + (k * 2) + 1] = 0x1F;
     }
+    // Making Cursor
     outb(0x3D4, 0x0A); outb(0x3D5, 0x20);
     outb(0x64, 0xA8); while (inb(0x64) & 2); outb(0x64, 0xD4);
     while (inb(0x64) & 2); outb(0x60, 0xF4); while (!(inb(0x64) & 1)); (void)inb(0x60);
